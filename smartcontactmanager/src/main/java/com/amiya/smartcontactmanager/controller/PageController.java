@@ -10,7 +10,7 @@ public class PageController {
     @RequestMapping("/home")
     public String home(Model model) {
         System.out.println("This is home page handler");
-        model.addAttribute("userName", "Amiya");
+        model.addAttribute("userName", "Amiya Mishra");
         return "home";
     }
 
