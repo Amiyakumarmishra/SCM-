@@ -14,4 +14,18 @@ public class PageController {
         return "home";
     }
 
+    @RequestMapping("/about")
+    public String about(Model model) {
+        System.out.println("This is home page handler");
+        model.addAttribute("userName", "Amiya Mishra");
+        return "about";
+    }
+
+    @RequestMapping("/services")
+    public String services(Model model) {
+        System.out.println("This is home page handler");
+        model.addAttribute("userName", "Amiya Mishra");
+        return "services";
+    }
+
 }
