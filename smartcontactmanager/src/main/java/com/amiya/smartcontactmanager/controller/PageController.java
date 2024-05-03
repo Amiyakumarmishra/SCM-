@@ -16,14 +16,35 @@ public class PageController {
 
     @RequestMapping("/about")
     public String about(Model model) {
-        System.out.println("This is home page handler");
+        System.out.println("This is about page handler");
         model.addAttribute("userName", "Amiya Mishra");
         return "about";
     }
 
-    @RequestMapping("/services")
+    @RequestMapping("/contact")
     public String services(Model model) {
-        System.out.println("This is home page handler");
+        System.out.println("This is contact page handler");
+        model.addAttribute("userName", "Amiya Mishra");
+        return "contact";
+    }
+
+    @RequestMapping("/login")
+    public String contact(Model model) {
+        System.out.println("This is login page handler");
+        model.addAttribute("userName", "Amiya Mishra");
+        return "login";
+    }
+
+    @RequestMapping("/signup")
+    public String login(Model model) {
+        System.out.println("This is signup page handler");
+        model.addAttribute("userName", "Amiya Mishra");
+        return "signup";
+    }
+
+    @RequestMapping("/services")
+    public String signuo(Model model) {
+        System.out.println("This is services page handler");
         model.addAttribute("userName", "Amiya Mishra");
         return "services";
     }

@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title})}">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Services</title>
   </head>
   <body>
-    <h1>This is about page</h1>
-    <div th:insert="~{base :: parent('service one','service two')}"></div>
-    <!-- <div th:replace="~{base :: parent}"></div> -->
-  </body>
+    <div id="content">
+      <h1>welcome to service page</h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur error
+        aut illo dolorum eveniet voluptatum atque! Sint dolore architecto
+        repellat vero voluptate perferendis, delectus sapiente quisquam.
+        Repellendus voluptas magni exercitationem ullam sequi!
+      </p>
+    </div>
   </body>
 </html>
