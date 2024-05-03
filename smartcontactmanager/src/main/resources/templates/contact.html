@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title})}">
+<html
+  lang="en"
+  th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
+>
   <head>
-    <title>Contact</title>
+    <title>Contact Us Page</title>
   </head>
   <body>
     <div id="content">
-      <h1>welcome to contact page</h1>
+      <h1>Welcome to Contact page</h1>
       <p>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur error
-        aut illo dolorum eveniet voluptatum atque! Sint dolore architecto
-        repellat vero voluptate perferendis, delectus sapiente quisquam.
-        Repellendus voluptas magni exercitationem ullam sequi!
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur,
+        ratione!
       </p>
     </div>
+    <script>
+      console.log("Home page");
+    </script>
   </body>
 </html>
