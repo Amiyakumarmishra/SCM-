@@ -1,11 +1,26 @@
 package com.amiya.smartcontactmanager.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.amiya.smartcontactmanager.entity.Users;
+import com.amiya.smartcontactmanager.form.UserForm;
+import com.amiya.smartcontactmanager.service.UserService;
+import com.amiya.smartcontactmanager.utils.Message;
+import com.amiya.smartcontactmanager.utils.MessageType;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class PageController {
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/home")
     public String home(Model model) {
@@ -38,15 +53,45 @@ public class PageController {
     @RequestMapping("/signup")
     public String login(Model model) {
         System.out.println("This is signup page handler");
-        model.addAttribute("userName", "Amiya Mishra");
+        UserForm userForm = new UserForm();
+        userForm.setName("Amiya Mishra");
+        userForm.setAbout("Write Something About your self");
+
+        model.addAttribute("userForm", userForm);
         return "signup";
     }
 
     @RequestMapping("/services")
-    public String signuo(Model model) {
+    public String signup(Model model) {
         System.out.println("This is services page handler");
         model.addAttribute("userName", "Amiya Mishra");
         return "services";
+    }
+
+    @RequestMapping(value = "/do-register", method = RequestMethod.POST)
+    public String processRegisterForm(@ModelAttribute UserForm userForm, HttpSession session) {
+        System.out.println("Processing Registration Form");
+
+        System.out.println(userForm.toString());
+
+        Users user = new Users();
+        user.setName(userForm.getName());
+        user.setEmail(userForm.getEmail());
+        user.setPassword(userForm.getPassword());
+        user.setAbout(userForm.getAbout());
+        user.setPhoneNumber(userForm.getPhoneNumber());
+        user.setProfilePic(
+                "https://www.learncodewithdurgesh.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdurgesh_sir.35c6cb78.webp&w=1920&q=75");
+
+        Users savedUser = userService.saveUser(user);
+
+        System.out.println("user saved :");
+
+        Message message = Message.builder().content("Registration Successful").type(MessageType.green).build();
+
+        session.setAttribute("message", message);
+
+        return "redirect:/signup";
     }
 
 }
