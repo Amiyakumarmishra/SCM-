@@ -7,12 +7,14 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.amiya.smartcontactmanager.entity.Users;
 import com.amiya.smartcontactmanager.exception.ResourceNotFoundException;
 import com.amiya.smartcontactmanager.repository.UserRepository;
 import com.amiya.smartcontactmanager.service.UserService;
+import com.amiya.smartcontactmanager.utils.AppConstants;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -22,13 +24,20 @@ public class UserServiceImpl implements UserService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public Users saveUser(Users user) {
 
         String userId = UUID.randomUUID().toString();
         user.setUserId(userId);
 
-        user.setPassword(user.getPassword());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        // set the user role
+
+        user.setRoleList(List.of(AppConstants.ROLE_USER));
 
         logger.info(user.getProvider().toString());
 

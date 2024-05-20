@@ -3,6 +3,7 @@ package com.amiya.smartcontactmanager.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,12 +16,25 @@ import com.amiya.smartcontactmanager.utils.Message;
 import com.amiya.smartcontactmanager.utils.MessageType;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class PageController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping("/")
+    public String index() {
+        return "redirect:/home";
+    }
+
+    public String index(Model model) {
+        System.out.println("This is home page handler");
+        model.addAttribute("userName", "Amiya Mishra");
+        return "home";
+    }
 
     @RequestMapping("/home")
     public String home(Model model) {
@@ -45,8 +59,6 @@ public class PageController {
 
     @RequestMapping("/login")
     public String contact(Model model) {
-        System.out.println("This is login page handler");
-        model.addAttribute("userName", "Amiya Mishra");
         return "login";
     }
 
@@ -54,8 +66,8 @@ public class PageController {
     public String login(Model model) {
         System.out.println("This is signup page handler");
         UserForm userForm = new UserForm();
-        userForm.setName("Amiya Mishra");
-        userForm.setAbout("Write Something About your self");
+        // userForm.setName("Amiya Mishra");
+        // userForm.setAbout("Write Something About your self");
 
         model.addAttribute("userForm", userForm);
         return "signup";
@@ -69,10 +81,16 @@ public class PageController {
     }
 
     @RequestMapping(value = "/do-register", method = RequestMethod.POST)
-    public String processRegisterForm(@ModelAttribute UserForm userForm, HttpSession session) {
+    public String processRegisterForm(@Valid @ModelAttribute UserForm userForm, BindingResult rBindingResult,
+            HttpSession session) {
         System.out.println("Processing Registration Form");
 
         System.out.println(userForm.toString());
+
+        // validate form data
+        if (rBindingResult.hasErrors()) {
+            return "signup";
+        }
 
         Users user = new Users();
         user.setName(userForm.getName());
