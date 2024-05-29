@@ -23,6 +23,9 @@ public class SecurityConfig {
     @Autowired
     private SecurityCustomUserDetailService userDetailService;
 
+    @Autowired
+    private OauthAuthenticationSuccessHandler handler;
+
     // @Bean
     // public UserDetailsService userDetailsService() {
 
@@ -88,6 +91,14 @@ public class SecurityConfig {
             logoutForm.logoutUrl("/logout");
             logoutForm.logoutSuccessUrl("/login?logout=true");
         });
+
+        // httpSecurity.oauth2Login(Customizer.withDefaults());
+
+        httpSecurity.oauth2Login(oauth -> {
+            oauth.loginPage("/login");
+            oauth.successHandler(handler);
+        });
+
         return httpSecurity.build();
 
     }
